@@ -16,11 +16,8 @@
   },
   "exclude": [
     "wwwroot",
-    "node_modules"
-  ],
-  "publishExclude": [
-    "**.user",
-    "**.vspscc"
+    "node_modules",
+    "bower_components"
   ],
   "scripts": {
       "prepublish": [

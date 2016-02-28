@@ -1,12 +1,11 @@
 using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Hosting;
+using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Data.Entity;
 using LicenseManager.Models;
-using Microsoft.AspNet.Hosting;
 
-namespace src
+namespace LicenseManager
 {
     public class Startup
     {
@@ -37,9 +36,19 @@ namespace src
         {
             app.UseIISPlatformHandler();
 
-            app.Run(async (context) =>
+            app.UseStaticFiles();
+
+            if (env.IsDevelopment())
             {
-                await context.Response.WriteAsync("Hello World!");
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "Home",
+                    template: "{controller=Home}/{action=Index}"
+                );
             });
         }
 

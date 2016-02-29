@@ -32,6 +32,9 @@
         "postrestore": [
             "npm install",
             "bower install"
+        ],
+        "postpublish": [
+            "gulp build"
         ]
     }
 }

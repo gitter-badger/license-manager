@@ -1,9 +1,10 @@
+@inject IOptions<GlobalSettings> GlobalSettings
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>License Manager</title>        
+        <title>@GlobalSettings.Value.ApplicationName</title>        
         <environment names="Development">
             <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
             <link rel="stylesheet" href="~/lib/bootstrap-treeview/bootstrap-treeview.min.css" />

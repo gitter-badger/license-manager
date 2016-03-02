@@ -4,6 +4,7 @@ using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using LicenseManager.Models;
+using LicenseManager.Configuration;
 
 namespace LicenseManager
 {
@@ -30,6 +31,12 @@ namespace LicenseManager
 
             services
                 .AddMvc();
+
+            services
+                .AddOptions();
+
+            services
+                .Configure<GlobalSettings>(Configuration.GetSection("GlobalSettings"));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

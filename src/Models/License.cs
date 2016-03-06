@@ -23,13 +23,13 @@ namespace LicenseManager.Models
 
         /// Identyfikator produktu
         public Guid ProductId { get; set; }
-        
+
         /// Szablon licencji
         public LicenseTemplate LicenseTemplate { get; set; }
-        
+
         /// Identyfikator szablonu licencji
         public Guid LicenseTemplateId { get; set; }
-        
+
         /// Elementy licencji
         public List<LicenseElement> LicenseElements { get; set; }
     }

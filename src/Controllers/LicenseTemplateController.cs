@@ -2,9 +2,9 @@ using Microsoft.AspNet.Mvc;
 
 namespace LicenseManager.Controllers
 {
-    public class HomeController : Controller
+    public class LicenseTemplateController : Controller
     {
-        public HomeController()
+        public LicenseTemplateController()
         {
         }
 

@@ -1,0 +1,16 @@
+<h1>LicenseController</h1>
+<h2>Klient:</h2>
+<p>
+    Nazwa: <input type="text" data-bind="textInput: Name" placeholder="Nazwa" />
+</p>
+<p>
+    Opis: <input type="text" data-bind="textInput: Description" placeholder="Opis" />
+</p>
+<button type="button" class="btn btn-primary" data-bind="click: create">Stwórz</button>
+
+@section scripts {
+    <script src="~/js/ViewModels/ClientViewModel.js"></script>
+    <script>
+        ko.applyBindings(new ClientViewModel());
+    </script>
+}

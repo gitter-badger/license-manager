@@ -14,21 +14,24 @@
             <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
             <link rel="stylesheet" href="~/lib/bootstrap-treeview/bootstrap-treeview.min.css" />
             <link rel="stylesheet" href="~/css/main.min.css" />            
-        </environment>        
+        </environment>
     </head>
     <body>
-        @RenderBody()
+        @RenderBody()        
+        <environment names="Development">
+            <script src="~/lib/jquery/jquery.js"></script>
+            <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+            <script src="~/lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+            <script src="~/lib/knockout/knockout.js"></script>
+            <script src="~/lib/knockout-mapping/knockout.mapping.js"></script>
+        </environment>    
+        <environment names="Staging,Production">
+            <script src="~/lib/jquery/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+            <script src="~/lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+            <script src="~/lib/knockout/knockout.js"></script>
+            <script src="~/lib/knockout-mapping/knockout.mapping.js"></script>
+        </environment>
+        @RenderSection("scripts", required: false)
     </body>    
-    <environment names="Development">
-        <script src="~/lib/jquery/jquery.js"></script>
-        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-        <script src="~/lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-        <script src="~/lib/knockout/knockout.js"></script>
-    </environment>    
-    <environment names="Staging,Production">
-        <script src="~/lib/jquery/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
-        <script src="~/lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-        <script src="~/lib/knockout/knockout.js"></script>
-    </environment>    
 </html>

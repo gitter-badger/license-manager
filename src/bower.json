@@ -2,9 +2,9 @@
     "name": "license-manager",
     "private": true,
     "dependencies": {
-        "bootstrap": "3.3.6",
-        "bootstrap-treeview": "1.2.0",
-        "knockout": "3.4.0",
-        "knockout-mapping": "2.4.1"
+        "bootstrap": "*",
+        "bootstrap-treeview": "*",
+        "knockout": "*",
+        "knockout-mapping": "*"
     }
 }

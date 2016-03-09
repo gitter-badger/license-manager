@@ -41,8 +41,6 @@ namespace LicenseManager
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseIISPlatformHandler();
-
             app.UseStaticFiles();
 
             if (env.IsDevelopment())

@@ -3,15 +3,14 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
-using LicenseManager.Models;
+using LicenseManager.Database;
 
 namespace src.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
-    [Migration("20160228120412_Initial")]
-    partial class Initial
+    [DbContext(typeof(LicenseManagerDbContext))]
+    partial class LicenseManagerDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")

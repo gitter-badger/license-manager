@@ -3,7 +3,7 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using LicenseManager.Models;
+using LicenseManager.Database;
 using LicenseManager.Configuration;
 
 namespace LicenseManager
@@ -27,7 +27,7 @@ namespace LicenseManager
             services
                 .AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+                .AddDbContext<LicenseManagerDbContext>(options => options.UseSqlServer(connectionString));
 
             services
                 .AddMvc();

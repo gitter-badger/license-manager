@@ -5,6 +5,7 @@
         "bootstrap": "*",
         "bootstrap-treeview": "*",
         "knockout": "*",
-        "knockout-mapping": "*"
+        "knockout-mapping": "*",
+        "knockout-validation": "*"
     }
 }

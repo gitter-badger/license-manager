@@ -37,7 +37,7 @@ namespace LicenseManager.Controllers
                     Id = Guid.NewGuid(),
                     CreationDate = DateTime.Now,
                     Name = viewModel.Name,
-                    Description = viewModel.Description
+                    Description = !string.IsNullOrEmpty(viewModel.Description) ? viewModel.Description : null
                 };
 
                 licenseManagerDbContext.Clients.Add(client);

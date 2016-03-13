@@ -16,34 +16,38 @@ var paths = {
     bower: "./bower_components/"
 };
 
-gulp.task("copy-libs", function () {
-    var bower_libs = {
-        "bootstrap": "bootstrap/dist/**/*.{css,eot,js,map,svg,ttf,woff,woff2}",
-        "bootstrap-treeview": "bootstrap-treeview/dist/**/*.{css,js}",
-        "jquery": "jquery/dist/**/*.{js,map}",
-        "knockout": "knockout/dist/**/*.js",
-        "knockout-mapping": "knockout-mapping/*.js"
+gulp.task("copy-libs", function() {
+    var libs = {
+        "bootstrap": ["bootstrap/dist/**/*.{css,eot,js,map,svg,ttf,woff,woff2}"],
+        "bootstrap-treeview": ["bootstrap-treeview/dist/**/*.{css,js,map}"],
+        "jquery": ["jquery/dist/**/*.{js,map}"],
+        "knockout": ["knockout/dist/**/*.{js,map}"],
+        "knockout-mapping": ["knockout-mapping/*.{js,map}"],
+        "knockout-validation": ["knockout-validation/dist/**/*.{js,map}", "knockout-validation/localization/pl-PL.js"]
     };
-    for (var lib in bower_libs) {
-        gulp.src(paths.bower + bower_libs[lib])
-            .pipe(gulp.dest(paths.lib + lib));
+    for (var lib in libs) {
+        for (var path in libs[lib]) {
+            gulp
+                .src(paths.bower + libs[lib][path])
+                .pipe(gulp.dest(paths.lib + lib));
+        }
     }
 });
 
-gulp.task("copy-js", function () {
+gulp.task("copy-js", function() {
     return gulp
         .src(paths.scripts + "**/*.js")
         .pipe(gulp.dest(paths.js));
 });
 
-gulp.task("less", function () {
+gulp.task("less", function() {
     return gulp
         .src(paths.styles + "**/*.less")
         .pipe(gulp_less())
         .pipe(gulp.dest(paths.css));
 });
 
-gulp.task("copy-css", ["less"], function () {
+gulp.task("copy-css", ["less"], function() {
     return gulp
         .src([paths.css + "**/*.css", "!" + paths.css + "**/*.min.css"])
         .pipe(gulp_cssmin())

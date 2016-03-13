@@ -6,11 +6,12 @@
 <p>
     Opis: <input type="text" data-bind="textInput: Description" placeholder="Opis" />
 </p>
-<button type="button" class="btn btn-primary" data-bind="click: create">Stwórz</button>
+<button type="button" class="btn btn-primary" data-bind="click: Create">Stwórz</button>
 
 @section scripts {
     <script src="~/js/ViewModels/ClientViewModel.js"></script>
     <script>
+        ko.validation.locale("pl-PL");
         ko.applyBindings(new ClientViewModel());
     </script>
 }

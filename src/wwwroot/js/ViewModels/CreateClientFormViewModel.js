@@ -1,10 +1,10 @@
-var ClientViewModel = function() {
+var CreateClientFormViewModel = function() {
     var self = this;
 
     self.Name = ko.observable().extend({ required: true, maxLength: 100 });
     self.Description = ko.observable().extend({ maxLength: 500 });
 
-    self.Create = function() {
+    self.Save = function() {
         if (self.Errors().length == 0) {
             $.ajax({
                 url: "/License/CreateClient",
@@ -19,6 +19,11 @@ var ClientViewModel = function() {
         } else {
             self.Errors.showAllMessages();
         }
+    }
+
+    self.Clear = function() {
+        self.Name("");
+        self.Description("");
     }
 
     self.Errors = ko.validation.group(self);

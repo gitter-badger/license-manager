@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="panel-title">
-            Stwórz nowego klienta
+            Stwórz nowy system
         </div>
     </div>
     <div class="panel-body">
@@ -31,14 +31,14 @@
 </div>
     
 @section scripts {
-    <script src="~/js/ViewModels/CreateClientFormViewModel.js"></script>
+    <script src="~/js/ViewModels/CreateSystemFormViewModel.js"></script>
     <script>
         ko.validation.init({
             insertMessages: false
         });
         ko.validation.locale("pl-PL");
         
-        var viewModel = new CreateClientFormViewModel();
+        var viewModel = new CreateSystemFormViewModel();
         ko.applyBindings(viewModel);
     </script>
 }

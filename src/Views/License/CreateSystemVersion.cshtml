@@ -1,0 +1,57 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            Stwórz nową wersję systemu
+        </div>
+    </div>
+    <div class="panel-body">
+        <form>
+            <div class="form-group">
+                <label for="Major">Numer główny:</label>
+                <span class="validationElement alert-danger" data-bind="validationMessage: Major"></span>
+                <input type="text" data-bind="textInput: Major" id="Major" class="form-control" placeholder="Podaj numer główny.." />
+            </div>
+            <div class="form-group">
+                <label for="Minor">Numer dodatkowy:</label>
+                <span class="validationElement alert-danger" data-bind="validationMessage: Minor"></span>
+                <input type="text" data-bind="textInput: Minor" id="Minor" class="form-control" placeholder="Podaj numer dodatkowy.." />
+            </div>
+            <div class="form-group">
+                <label for="Description">Opis:</label>
+                <span class="validationElement alert-danger" data-bind="validationMessage: Description"></span>
+                <textarea data-bind="textInput: Description" rows="4" id="Description" class="form-control" placeholder="Podaj opis.."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="SystemId">System:</label>
+                <span class="validationElement alert-danger" data-bind="validationMessage: SystemId"></span>
+                <select data-bind="options: AvailableSystems, optionsValue: 'Id', optionsText: 'Name', optionsCaption: 'Wybierz system..', value: SystemId" id="SystemId" class="form-control"></select>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" data-bind="click: Save">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>
+                    Zapisz dane
+                </button>
+                <button type="button" class="btn btn-default" data-bind="click: Clear">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Wyczyść formularz
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+    
+@section scripts {
+    <script src="~/js/ViewModels/CreateSystemVersionFormViewModel.js"></script>
+    <script>
+        ko.validation.init({
+            insertMessages: false
+        });
+        ko.validation.locale("pl-PL");
+        
+        var viewModel = new CreateSystemVersionFormViewModel();
+        $.getJSON("/License/GetAvailableSystems", function(data) {
+            viewModel.AvailableSystems(data);    
+        });
+        ko.applyBindings(viewModel);
+    </script>
+}

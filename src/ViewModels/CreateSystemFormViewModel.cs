@@ -1,7 +1,7 @@
 namespace LicenseManager.ViewModels
 {
-    /// Klient
-    public class ClientViewModel
+    /// Dane z formularza "Stwórz nowy system"
+    public class CreateSystemFormViewModel
     {
         /// Nazwa
         public string Name { get; set; }

@@ -1,0 +1,27 @@
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>LP.</th>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: Rows">
+        <tr>
+            <td class="col-xs-1" data-bind="text: ($index() + 1)"></td>
+            <td class="col-xs-3" data-bind="text: Name"></td>
+            <td class="col-xs-5" data-bind="text: Description"></td>
+            <td class="col-xs-3"></td>
+        </tr>
+    </tbody>
+</table>
+
+@section scripts {
+    <script src="~/js/ViewModels/ClientsTableViewModel.js"></script>
+    <script>
+        var viewModel = new ClientsTableViewModel();
+        viewModel.Rows(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ClientsTable.Rows)));
+        ko.applyBindings(viewModel);
+    </script>
+}

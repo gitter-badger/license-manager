@@ -1,10 +1,8 @@
 using System;
-using Microsoft.AspNet.Mvc;
-using LicenseManager.Models;
-using LicenseManager.ViewModels;
-using LicenseManager.Database;
 using System.Linq;
-using Newtonsoft.Json;
+using Microsoft.AspNet.Mvc;
+using LicenseManager.Database;
+using LicenseManager.ViewModels;
 
 namespace LicenseManager.Controllers
 {
@@ -21,6 +19,27 @@ namespace LicenseManager.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Clients()
+        {
+            ClientsViewModel viewModel = new ClientsViewModel()
+            {
+                ClientsTable = new ClientsTableViewModel()
+                {
+                    Rows = licenseManagerDbContext.Clients
+                        .OrderBy(x => x.Name)
+                        .Select(x => new ClientsTableRowViewModel()
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            Description = x.Description
+                        })
+                }
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -78,7 +97,21 @@ namespace LicenseManager.Controllers
         [HttpGet]
         public IActionResult CreateSystemVersion()
         {
-            return View();
+            CreateSystemVersionViewModel viewModel = new CreateSystemVersionViewModel()
+            {
+                SystemDropDownList = new SystemDropDownListViewModel()
+                {
+                    Items = licenseManagerDbContext.Systems
+                        .OrderBy(x => x.Name)
+                        .Select(x => new SystemDropDownListItemViewModel()
+                        {
+                            Id = x.Id,
+                            Name = x.Name
+                        })
+                }
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -103,17 +136,6 @@ namespace LicenseManager.Controllers
             }
 
             return Json(Url.Action("Index", "License"));
-        }
-
-        [HttpGet]
-        public IActionResult GetAvailableSystems()
-        {
-            return Json(
-                licenseManagerDbContext.Systems
-                    .OrderBy(x => x.Name)
-                    .Select(x => new { Id = x.Id, Name = x.Name })
-                    .ToArray()
-            );
         }
     }
 }

@@ -6,7 +6,7 @@ var CreateSystemVersionFormViewModel = function() {
     self.Description = ko.observable().extend({ maxLength: 500 });
     self.SystemId = ko.observable().extend({ required: true });
     
-    self.AvailableSystems = ko.observableArray();
+    self.SystemDropDownListItems = ko.observableArray();
 
     self.Save = function() {
         if (self.Errors().length == 0) {

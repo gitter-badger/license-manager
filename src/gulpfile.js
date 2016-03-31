@@ -21,9 +21,10 @@ gulp.task("copy-libs", function() {
         "bootstrap": ["bootstrap/dist/**/*.{css,eot,js,map,svg,ttf,woff,woff2}"],
         "bootstrap-treeview": ["bootstrap-treeview/dist/**/*.{css,js,map}"],
         "jquery": ["jquery/dist/**/*.{js,map}"],
+        "jquery-validation": ["jquery-validation/dist/**/*.{js,map}"],
+        "jquery-validation-unobtrusive": ["jquery-validation-unobtrusive/**/*.{js,map}"],
         "knockout": ["knockout/dist/**/*.{js,map}"],
-        "knockout-mapping": ["knockout-mapping/*.{js,map}"],
-        "knockout-validation": ["knockout-validation/dist/**/*.{js,map}", "knockout-validation/localization/pl-PL.js"]
+        "knockout-mapping": ["knockout-mapping/*.{js,map}"]
     };
     for (var lib in libs) {
         for (var path in libs[lib]) {

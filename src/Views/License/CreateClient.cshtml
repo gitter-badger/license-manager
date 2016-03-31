@@ -1,3 +1,5 @@
+@model CreateClientViewModel
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="panel-title">
@@ -5,23 +7,23 @@
         </div>
     </div>
     <div class="panel-body">
-        <form>
+        <form asp-action="CreateClient" asp-controller="License" asp-anti-forgery="true" method="POST">          
             <div class="form-group">
-                <label for="Name">Nazwa:</label>
-                <span class="validationElement alert-danger" data-bind="validationMessage: Name"></span>
-                <input type="text" data-bind="textInput: Name" id="Name" class="form-control" placeholder="Podaj nazwę.." />
+                <label asp-for="Name"></label>:
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <input type="text" asp-for="Name" class="form-control" placeholder="Podaj nazwę.." />
             </div>
             <div class="form-group">
-                <label for="Description">Opis:</label>
-                <span class="validationElement alert-danger" data-bind="validationMessage: Description"></span>
-                <textarea data-bind="textInput: Description" rows="4" id="Description" class="form-control" placeholder="Podaj opis.."></textarea>
+                <label asp-for="Description"></label>:
+                <span asp-validation-for="Description" class="text-danger"></span>
+                <textarea asp-for="Description" class="form-control" placeholder="Podaj opis.." rows="4"></textarea>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-primary" data-bind="click: Save">
+                <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-floppy-saved"></span>
                     Zapisz dane
                 </button>
-                <button type="button" class="btn btn-default" data-bind="click: Clear">
+                <button type="reset" class="btn btn-default">
                     <span class="glyphicon glyphicon-remove"></span>
                     Wyczyść formularz
                 </button>
@@ -29,16 +31,5 @@
         </form>
     </div>
 </div>
-    
-@section scripts {
-    <script src="~/js/ViewModels/CreateClientFormViewModel.js"></script>
-    <script>
-        ko.validation.init({
-            insertMessages: false
-        });
-        ko.validation.locale("pl-PL");
-        
-        var viewModel = new CreateClientFormViewModel();
-        ko.applyBindings(viewModel);
-    </script>
-}
+
+<a asp-controller="License" asp-action="Clients">Powrót do listy klientów</a>

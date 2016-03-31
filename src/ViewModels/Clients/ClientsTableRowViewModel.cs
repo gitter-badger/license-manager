@@ -1,8 +1,8 @@
 using System;
 
-namespace LicenseManager.ViewModels
+namespace LicenseManager.ViewModels.Clients
 {
-    /// Wiersz tabeli "Klienci"
+    /// Model widoku dla wiersza tabeli z klientami
     public class ClientsTableRowViewModel
     {
         /// Identyfikator

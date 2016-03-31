@@ -2,7 +2,11 @@ using System;
 using System.Linq;
 using Microsoft.AspNet.Mvc;
 using LicenseManager.Database;
-using LicenseManager.ViewModels;
+using LicenseManager.ViewModels.Clients;
+using LicenseManager.ViewModels.Systems;
+using LicenseManager.ViewModels.SystemVersions;
+using Microsoft.AspNet.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace LicenseManager.Controllers
 {
@@ -26,10 +30,10 @@ namespace LicenseManager.Controllers
         {
             ClientsViewModel viewModel = new ClientsViewModel()
             {
-                ClientsTable = new ClientsTableViewModel()
+                Table = new ClientsTableViewModel()
                 {
                     Rows = licenseManagerDbContext.Clients
-                        .OrderBy(x => x.Name)
+                        .OrderBy(x => x.CreationDate)
                         .Select(x => new ClientsTableRowViewModel()
                         {
                             Id = x.Id,
@@ -45,11 +49,14 @@ namespace LicenseManager.Controllers
         [HttpGet]
         public IActionResult CreateClient()
         {
-            return View();
+            CreateClientViewModel viewModel = new CreateClientViewModel();
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult CreateClient([FromBody]CreateClientFormViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateClient(CreateClientViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -63,19 +70,45 @@ namespace LicenseManager.Controllers
 
                 licenseManagerDbContext.Clients.Add(client);
                 licenseManagerDbContext.SaveChanges();
+
+                return RedirectToAction("Clients");
             }
 
-            return Json(Url.Action("Index", "License"));
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Systems()
+        {
+            SystemsViewModel viewModel = new SystemsViewModel()
+            {
+                Table = new SystemsTableViewModel()
+                {
+                    Rows = licenseManagerDbContext.Systems
+                        .OrderBy(x => x.CreationDate)
+                        .Select(x => new SystemsTableRowViewModel()
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            Description = x.Description
+                        })
+                }
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
         public IActionResult CreateSystem()
         {
-            return View();
+            CreateSystemViewModel viewModel = new CreateSystemViewModel();
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult CreateSystem([FromBody]CreateSystemFormViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateSystem(CreateSystemViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -89,24 +122,29 @@ namespace LicenseManager.Controllers
 
                 licenseManagerDbContext.Systems.Add(system);
                 licenseManagerDbContext.SaveChanges();
+
+                return RedirectToAction("Systems");
             }
 
-            return Json(Url.Action("Index", "License"));
+            return View(viewModel);
         }
 
         [HttpGet]
-        public IActionResult CreateSystemVersion()
+        public IActionResult SystemVersions()
         {
-            CreateSystemVersionViewModel viewModel = new CreateSystemVersionViewModel()
+            SystemVersionsViewModel viewModel = new SystemVersionsViewModel()
             {
-                SystemDropDownList = new SystemDropDownListViewModel()
+                Table = new SystemVersionsTableViewModel()
                 {
-                    Items = licenseManagerDbContext.Systems
-                        .OrderBy(x => x.Name)
-                        .Select(x => new SystemDropDownListItemViewModel()
+                    Rows = licenseManagerDbContext.SystemVersions
+                        .OrderBy(x => x.CreationDate)
+                        .Select(x => new SystemVersionsTableRowViewModel()
                         {
                             Id = x.Id,
-                            Name = x.Name
+                            Major = x.Major,
+                            Minor = x.Minor,
+                            Description = x.Description,
+                            SystemName = x.System.Name
                         })
                 }
             };
@@ -114,28 +152,64 @@ namespace LicenseManager.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        public IActionResult CreateSystemVersion()
+        {
+            ViewBag.SystemSelectListItems = GetSystemSelectListItems();
+
+            CreateSystemVersionViewModel viewModel = new CreateSystemVersionViewModel();
+
+            return View(viewModel);
+        }
+
         [HttpPost]
-        public IActionResult CreateSystemVersion([FromBody]CreateSystemVersionFormViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateSystemVersion(CreateSystemVersionViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                Guid systemId = Guid.Parse(viewModel.SystemId);
-
                 Models.SystemVersion systemVersion = new Models.SystemVersion()
                 {
                     Id = Guid.NewGuid(),
                     CreationDate = DateTime.Now,
-                    Major = viewModel.Major,
-                    Minor = viewModel.Minor,
+                    Major = int.Parse(viewModel.Major),
+                    Minor = int.Parse(viewModel.Minor),
                     Description = !string.IsNullOrEmpty(viewModel.Description) ? viewModel.Description : null,
-                    System = licenseManagerDbContext.Systems.Single(x => x.Id == systemId)
+                    System = licenseManagerDbContext.Systems.Single(x => x.Id == Guid.Parse(viewModel.SystemId))
                 };
 
                 licenseManagerDbContext.SystemVersions.Add(systemVersion);
                 licenseManagerDbContext.SaveChanges();
+
+                return RedirectToAction("SystemVersions");
             }
 
-            return Json(Url.Action("Index", "License"));
+            ViewBag.SystemSelectListItems = GetSystemSelectListItems();
+
+            return View(viewModel);
+        }
+
+        private List<SelectListItem> GetSystemSelectListItems()
+        {
+            List<SelectListItem> result = new List<SelectListItem>();
+
+            result.Add(new SelectListItem()
+            {
+                Text = "Wybierz system..",
+                Value = ""
+            });
+
+            result.AddRange(
+                licenseManagerDbContext.Systems
+                    .OrderBy(x => x.Name)
+                    .Select(x => new SelectListItem()
+                    {
+                        Text = x.Name,
+                        Value = x.Id.ToString()
+                    })
+            );
+
+            return result;
         }
     }
 }

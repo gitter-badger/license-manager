@@ -1,3 +1,5 @@
+@model CreateSystemVersionViewModel
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="panel-title">
@@ -5,33 +7,33 @@
         </div>
     </div>
     <div class="panel-body">
-        <form>
+        <form asp-action="CreateSystemVersion" asp-controller="License" asp-anti-forgery="true" method="POST">
             <div class="form-group">
-                <label for="Major">Numer główny:</label>
-                <span class="validationElement alert-danger" data-bind="validationMessage: Major"></span>
-                <input type="text" data-bind="textInput: Major" id="Major" class="form-control" placeholder="Podaj numer główny.." />
+                <label asp-for="Major"></label>:
+                <span asp-validation-for="Major" class="text-danger"></span>
+                <input type="text" asp-for="Major" class="form-control" placeholder="Podaj numer główny.." />
             </div>
             <div class="form-group">
-                <label for="Minor">Numer dodatkowy:</label>
-                <span class="validationElement alert-danger" data-bind="validationMessage: Minor"></span>
-                <input type="text" data-bind="textInput: Minor" id="Minor" class="form-control" placeholder="Podaj numer dodatkowy.." />
+                <label asp-for="Minor"></label>:
+                <span asp-validation-for="Minor" class="text-danger"></span>
+                <input type="text" asp-for="Minor" class="form-control" placeholder="Podaj numer dodatkowy.." />
             </div>
             <div class="form-group">
-                <label for="Description">Opis:</label>
-                <span class="validationElement alert-danger" data-bind="validationMessage: Description"></span>
-                <textarea data-bind="textInput: Description" rows="4" id="Description" class="form-control" placeholder="Podaj opis.."></textarea>
+                <label asp-for="Description"></label>:
+                <span asp-validation-for="Description" class="text-danger"></span>
+                <textarea asp-for="Description" class="form-control" placeholder="Podaj opis.." rows="4"></textarea>
             </div>
             <div class="form-group">
-                <label for="SystemId">System:</label>
-                <span class="validationElement alert-danger" data-bind="validationMessage: SystemId"></span>
-                <select data-bind="options: SystemDropDownListItems, optionsValue: 'Id', optionsText: 'Name', optionsCaption: 'Wybierz system..', value: SystemId" id="SystemId" class="form-control"></select>
+                <label asp-for="SystemId"></label>:
+                <span asp-validation-for="SystemId" class="text-danger"></span>
+                <select asp-for="SystemId" asp-items="@ViewBag.SystemSelectListItems" class="form-control"></select>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-primary" data-bind="click: Save">
+                <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-floppy-saved"></span>
                     Zapisz dane
                 </button>
-                <button type="button" class="btn btn-default" data-bind="click: Clear">
+                <button type="reset" class="btn btn-default">
                     <span class="glyphicon glyphicon-remove"></span>
                     Wyczyść formularz
                 </button>
@@ -39,17 +41,5 @@
         </form>
     </div>
 </div>
-    
-@section scripts {
-    <script src="~/js/ViewModels/CreateSystemVersionFormViewModel.js"></script>
-    <script>
-        ko.validation.init({
-            insertMessages: false
-        });
-        ko.validation.locale("pl-PL");
-        
-        var viewModel = new CreateSystemVersionFormViewModel();
-        viewModel.SystemDropDownListItems(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.SystemDropDownList.Items)));
-        ko.applyBindings(viewModel);
-    </script>
-}
+
+<a asp-controller="License" asp-action="SystemVersions">Powrót do listy wersji systemów</a>

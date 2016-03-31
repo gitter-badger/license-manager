@@ -2,10 +2,11 @@
     "name": "license-manager",
     "private": true,
     "dependencies": {
+        "jquery": "*",
+        "jquery-validation-unobtrusive": "*",
         "bootstrap": "*",
         "bootstrap-treeview": "*",
         "knockout": "*",
-        "knockout-mapping": "*",
-        "knockout-validation": "*"
+        "knockout-mapping": "*"
     }
 }

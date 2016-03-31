@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace LicenseManager.ViewModels
+namespace LicenseManager.ViewModels.Clients
 {
-    /// Tabela "Klienci"
+    /// Model widoku dla tabeli z klientami
     public class ClientsTableViewModel
     {
         /// Wiersze

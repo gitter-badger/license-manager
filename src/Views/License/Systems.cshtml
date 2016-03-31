@@ -1,4 +1,4 @@
-@model ClientsViewModel
+@model SystemsViewModel
 
 <table class="table table-bordered table-condensed">
     <thead>
@@ -22,9 +22,9 @@
 <a asp-controller="License" asp-action="Index">Powrót do strony głównej</a>
 
 @section scripts {
-    <script src="~/js/ViewModels/ClientsVM.js"></script>
+    <script src="~/js/ViewModels/SystemsVM.js"></script>
     <script>
-        var viewModel = new ClientsVM();
+        var viewModel = new SystemsVM();
         viewModel.Table.Rows(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Table.Rows)));
         ko.applyBindings(viewModel);
     </script>

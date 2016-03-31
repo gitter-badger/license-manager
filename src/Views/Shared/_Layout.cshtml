@@ -32,21 +32,21 @@
         </div>
         <environment names="Development">
             <script src="~/lib/jquery/jquery.js"></script>
+            <script src="~/lib/jquery-validation/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
             <script src="~/lib/bootstrap/js/bootstrap.js"></script>
             <script src="~/lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
             <script src="~/lib/knockout/knockout.js"></script>
             <script src="~/lib/knockout-mapping/knockout.mapping.js"></script>
-            <script src="~/lib/knockout-validation/knockout.validation.js"></script>
-            <script src="~/lib/knockout-validation/pl-PL.js"></script>
         </environment>    
         <environment names="Staging,Production">
             <script src="~/lib/jquery/jquery.min.js"></script>
+            <script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
             <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
             <script src="~/lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
             <script src="~/lib/knockout/knockout.js"></script>
             <script src="~/lib/knockout-mapping/knockout.mapping.js"></script>
-            <script src="~/lib/knockout-validation/knockout.validation.min.js"></script>
-            <script src="~/lib/knockout-validation/pl-PL.js"></script>
         </environment>
         @RenderSection("scripts", required: false)
     </body>    

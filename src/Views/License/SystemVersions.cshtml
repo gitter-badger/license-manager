@@ -1,10 +1,12 @@
-@model ClientsViewModel
+@model SystemVersionsViewModel
 
 <table class="table table-bordered table-condensed">
     <thead>
         <tr>
             <th>LP.</th>
-            <th>Nazwa</th>
+            <th>Nazwa systemu</th>
+            <th>Numer główny</th>
+            <th>Numer dodatkowy</th>
             <th>Opis</th>
             <th>Akcje</th>
         </tr>
@@ -12,8 +14,10 @@
     <tbody data-bind="foreach: Table.Rows">
         <tr>
             <td class="col-xs-1" data-bind="text: ($index() + 1)"></td>
-            <td class="col-xs-3" data-bind="text: Name"></td>
-            <td class="col-xs-5" data-bind="text: Description"></td>
+            <td class="col-xs-3" data-bind="text: SystemName"></td>
+            <td class="col-xs-1" data-bind="text: Major"></td>
+            <td class="col-xs-1" data-bind="text: Minor"></td>
+            <td class="col-xs-3" data-bind="text: Description"></td>
             <td class="col-xs-3"></td>
         </tr>
     </tbody>
@@ -22,9 +26,9 @@
 <a asp-controller="License" asp-action="Index">Powrót do strony głównej</a>
 
 @section scripts {
-    <script src="~/js/ViewModels/ClientsVM.js"></script>
+    <script src="~/js/ViewModels/SystemVersionsVM.js"></script>
     <script>
-        var viewModel = new ClientsVM();
+        var viewModel = new SystemVersionsVM();
         viewModel.Table.Rows(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Table.Rows)));
         ko.applyBindings(viewModel);
     </script>

@@ -1,23 +1,32 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Mvc;
 using LicenseManager.Database;
 using LicenseManager.ViewModels.Configuration.Clients;
 using LicenseManager.ViewModels.Configuration.Systems;
 using LicenseManager.ViewModels.Configuration.SystemVersions;
+using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
-using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace LicenseManager.Controllers
 {
     [Route("konfiguracja")]
     public class ConfigurationController : Controller
     {
-        private readonly LicenseManagerDbContext licenseManagerDbContext;
+        private readonly LicenseManagerDbContext dbContext;
+        private readonly ILogger<ConfigurationController> logger;
 
-        public ConfigurationController(LicenseManagerDbContext licenseManagerDbContext)
+        public ConfigurationController(
+            LicenseManagerDbContext dbContext,
+            ILogger<ConfigurationController> logger
+            )
         {
-            this.licenseManagerDbContext = licenseManagerDbContext;
+            if (dbContext == null) throw new ArgumentNullException(nameof(dbContext));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+
+            this.dbContext = dbContext;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -26,7 +35,7 @@ namespace LicenseManager.Controllers
         {
             return View();
         }
-        
+
         [HttpGet]
         [Route("klienci")]
         public IActionResult Clients()
@@ -35,7 +44,7 @@ namespace LicenseManager.Controllers
             {
                 Table = new ClientsTableViewModel()
                 {
-                    Rows = licenseManagerDbContext.Clients
+                    Rows = dbContext.Clients
                         .OrderBy(x => x.CreationDate)
                         .Select(x => new ClientsTableRowViewModel()
                         {
@@ -73,8 +82,8 @@ namespace LicenseManager.Controllers
                     Description = !string.IsNullOrEmpty(viewModel.Description) ? viewModel.Description : null
                 };
 
-                licenseManagerDbContext.Clients.Add(client);
-                licenseManagerDbContext.SaveChanges();
+                dbContext.Clients.Add(client);
+                dbContext.SaveChanges();
 
                 return RedirectToAction("Clients");
             }
@@ -90,7 +99,7 @@ namespace LicenseManager.Controllers
             {
                 Table = new SystemsTableViewModel()
                 {
-                    Rows = licenseManagerDbContext.Systems
+                    Rows = dbContext.Systems
                         .OrderBy(x => x.CreationDate)
                         .Select(x => new SystemsTableRowViewModel()
                         {
@@ -128,8 +137,8 @@ namespace LicenseManager.Controllers
                     Description = !string.IsNullOrEmpty(viewModel.Description) ? viewModel.Description : null
                 };
 
-                licenseManagerDbContext.Systems.Add(system);
-                licenseManagerDbContext.SaveChanges();
+                dbContext.Systems.Add(system);
+                dbContext.SaveChanges();
 
                 return RedirectToAction("Systems");
             }
@@ -145,7 +154,7 @@ namespace LicenseManager.Controllers
             {
                 Table = new SystemVersionsTableViewModel()
                 {
-                    Rows = licenseManagerDbContext.SystemVersions
+                    Rows = dbContext.SystemVersions
                         .OrderBy(x => x.CreationDate)
                         .Select(x => new SystemVersionsTableRowViewModel()
                         {
@@ -186,11 +195,11 @@ namespace LicenseManager.Controllers
                     Major = int.Parse(viewModel.Major),
                     Minor = int.Parse(viewModel.Minor),
                     Description = !string.IsNullOrEmpty(viewModel.Description) ? viewModel.Description : null,
-                    System = licenseManagerDbContext.Systems.Single(x => x.Id == Guid.Parse(viewModel.SystemId))
+                    System = dbContext.Systems.Single(x => x.Id == Guid.Parse(viewModel.SystemId))
                 };
 
-                licenseManagerDbContext.SystemVersions.Add(systemVersion);
-                licenseManagerDbContext.SaveChanges();
+                dbContext.SystemVersions.Add(systemVersion);
+                dbContext.SaveChanges();
 
                 return RedirectToAction("SystemVersions");
             }
@@ -211,7 +220,7 @@ namespace LicenseManager.Controllers
             });
 
             result.AddRange(
-                licenseManagerDbContext.Systems
+                dbContext.Systems
                     .OrderBy(x => x.Name)
                     .Select(x => new SelectListItem()
                     {

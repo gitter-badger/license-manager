@@ -3,6 +3,7 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using LicenseManager.Database;
 using LicenseManager.Configuration;
 
@@ -39,8 +40,10 @@ namespace LicenseManager
                 .Configure<GlobalSettings>(Configuration.GetSection("GlobalSettings"));
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            
             app.UseStaticFiles();
 
             if (env.IsDevelopment())

@@ -1,13 +1,13 @@
-@model CreateClientViewModel
+@model CreateSystemViewModel
 
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="panel-title">
-            Stwórz nowego klienta
+            Stwórz nowy system
         </div>
     </div>
     <div class="panel-body">
-        <form asp-action="CreateClient" asp-controller="License" asp-anti-forgery="true" method="POST">          
+        <form asp-action="CreateSystem" asp-controller="Configuration" asp-anti-forgery="true" method="POST">
             <div class="form-group">
                 <label asp-for="Name"></label>:
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -32,4 +32,4 @@
     </div>
 </div>
 
-<a asp-controller="License" asp-action="Clients">Powrót do listy klientów</a>
+<a asp-controller="Configuration" asp-action="Systems">Powrót do listy systemów</a>

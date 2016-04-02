@@ -1,6 +1,6 @@
 using System;
 
-namespace LicenseManager.ViewModels.SystemVersions
+namespace LicenseManager.ViewModels.Configuration.SystemVersions
 {
     /// Model widoku dla wiersza tabeli z wersjami systemów
     public class SystemVersionsTableRowViewModel

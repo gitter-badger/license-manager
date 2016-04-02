@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace LicenseManager.ViewModels.SystemVersions
+namespace LicenseManager.ViewModels.Configuration.SystemVersions
 {
     /// Model widoku dla tabeli z wersjami systemów
     public class SystemVersionsTableViewModel

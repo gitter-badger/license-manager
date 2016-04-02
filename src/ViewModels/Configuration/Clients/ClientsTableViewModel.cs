@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace LicenseManager.ViewModels.Clients
+namespace LicenseManager.ViewModels.Configuration.Clients
 {
     /// Model widoku dla tabeli z klientami
     public class ClientsTableViewModel

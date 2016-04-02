@@ -2,6 +2,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace LicenseManager.Controllers
 {
+    [Route("szablony-licencji")]
     public class LicenseTemplateController : Controller
     {
         public LicenseTemplateController()
@@ -9,6 +10,7 @@ namespace LicenseManager.Controllers
         }
 
         [HttpGet]
+        [Route("")]
         public IActionResult Index()
         {
             return View();

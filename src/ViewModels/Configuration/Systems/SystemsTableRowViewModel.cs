@@ -1,9 +1,9 @@
 using System;
 
-namespace LicenseManager.ViewModels.Clients
+namespace LicenseManager.ViewModels.Configuration.Systems
 {
-    /// Model widoku dla wiersza tabeli z klientami
-    public class ClientsTableRowViewModel
+    /// Model widoku dla wiersza tabeli z systemami
+    public class SystemsTableRowViewModel
     {
         /// Identyfikator
         public Guid Id { get; set; }

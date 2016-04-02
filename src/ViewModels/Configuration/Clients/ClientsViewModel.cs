@@ -1,4 +1,4 @@
-namespace LicenseManager.ViewModels.Clients
+namespace LicenseManager.ViewModels.Configuration.Clients
 {
     /// Model widoku dla akcji wyświetlania klientów
     public class ClientsViewModel

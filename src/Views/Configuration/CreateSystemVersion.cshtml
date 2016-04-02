@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="panel-body">
-        <form asp-action="CreateSystemVersion" asp-controller="License" asp-anti-forgery="true" method="POST">
+        <form asp-action="CreateSystemVersion" asp-controller="Configuration" asp-anti-forgery="true" method="POST">
             <div class="form-group">
                 <label asp-for="Major"></label>:
                 <span asp-validation-for="Major" class="text-danger"></span>
@@ -42,4 +42,4 @@
     </div>
 </div>
 
-<a asp-controller="License" asp-action="SystemVersions">Powrót do listy wersji systemów</a>
+<a asp-controller="Configuration" asp-action="SystemVersions">Powrót do listy wersji systemów</a>

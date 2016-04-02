@@ -1,4 +1,4 @@
-namespace LicenseManager.ViewModels.Systems
+namespace LicenseManager.ViewModels.Configuration.Systems
 {
     /// Model widoku dla akcji wyświetlania systemów
     public class SystemsViewModel

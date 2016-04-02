@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace LicenseManager.ViewModels.Systems
+namespace LicenseManager.ViewModels.Configuration.Systems
 {
     /// Model widoku dla tabeli z systemami
     public class SystemsTableViewModel

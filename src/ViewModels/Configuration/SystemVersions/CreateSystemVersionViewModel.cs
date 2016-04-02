@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace LicenseManager.ViewModels.SystemVersions
+namespace LicenseManager.ViewModels.Configuration.SystemVersions
 {
     /// Model widoku dla akcji tworzenia nowej wersji systemu
     public class CreateSystemVersionViewModel

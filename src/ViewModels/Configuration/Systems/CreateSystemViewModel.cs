@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace LicenseManager.ViewModels.Clients
+namespace LicenseManager.ViewModels.Configuration.Systems
 {
-    /// Model widoku dla akcji tworzenia nowego klienta
-    public class CreateClientViewModel
+    /// Model widoku dla akcji tworzenia nowego systemu
+    public class CreateSystemViewModel
     {
         /// Nazwa
         [Display(Name = "Nazwa")]

@@ -1,9 +1,9 @@
 @model SystemsViewModel
 
-<table class="table table-bordered table-condensed">
+<table class="table table-bordered">
     <thead>
         <tr>
-            <th>LP.</th>
+            <th></th>
             <th>Nazwa</th>
             <th>Opis</th>
             <th>Akcje</th>
@@ -11,15 +11,24 @@
     </thead>
     <tbody data-bind="foreach: Table.Rows">
         <tr>
-            <td class="col-xs-1" data-bind="text: ($index() + 1)"></td>
+            <td class="col-xs-1 text-center" data-bind="text: ($index() + 1) + '.'"></td>
             <td class="col-xs-3" data-bind="text: Name"></td>
             <td class="col-xs-5" data-bind="text: Description"></td>
-            <td class="col-xs-3"></td>
+            <td class="col-xs-3 text-center">
+                <a asp-controller="Configuration" asp-action="EditSystem" class="btn btn-default">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Edytuj
+                </a>
+                <a asp-controller="Configuration" asp-action="DeleteSystem" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Usuń
+                </a>
+            </td>
         </tr>
     </tbody>
 </table>
 
-<a asp-controller="Configuration" asp-action="Index">Powrót do strony głównej</a>
+<a asp-controller="Configuration" asp-action="Index" class="btn btn-default">Powrót do strony głównej</a>
 
 @section scripts {
     <script src="~/js/ViewModels/SystemsVM.js"></script>

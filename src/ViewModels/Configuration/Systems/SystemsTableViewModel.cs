@@ -6,6 +6,6 @@ namespace LicenseManager.ViewModels.Configuration.Systems
     public class SystemsTableViewModel
     {
         /// Wiersze
-        public IEnumerable<SystemsTableRowViewModel> Rows { get; set; }
+        public List<SystemsTableRowViewModel> Rows { get; set; }
     }
 }

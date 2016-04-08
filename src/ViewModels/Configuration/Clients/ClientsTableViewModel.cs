@@ -6,6 +6,6 @@ namespace LicenseManager.ViewModels.Configuration.Clients
     public class ClientsTableViewModel
     {
         /// Wiersze
-        public IEnumerable<ClientsTableRowViewModel> Rows { get; set; }
+        public List<ClientsTableRowViewModel> Rows { get; set; }
     }
 }

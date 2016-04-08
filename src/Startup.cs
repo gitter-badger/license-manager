@@ -1,11 +1,13 @@
+using AutoMapper;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using LicenseManager.Database;
 using LicenseManager.Configuration;
+using LicenseManager.Configuration.Mappings;
+using LicenseManager.Database;
 
 namespace LicenseManager
 {
@@ -38,12 +40,27 @@ namespace LicenseManager
 
             services
                 .Configure<GlobalSettings>(Configuration.GetSection("GlobalSettings"));
+
+            services
+                .AddSingleton<IMapper>(sc => CreateMapperConfiguration().CreateMapper());
+        }
+
+        private MapperConfiguration CreateMapperConfiguration()
+        {
+            MapperConfiguration mapperConfiguration = new MapperConfiguration(configuration =>
+            {
+                configuration.AddProfile(new MapperProfile());
+            });
+
+            mapperConfiguration.AssertConfigurationIsValid();
+
+            return mapperConfiguration;
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            
+
             app.UseStaticFiles();
 
             if (env.IsDevelopment())

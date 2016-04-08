@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using LicenseManager.Database;
 using LicenseManager.ViewModels.Configuration.Clients;
 using LicenseManager.ViewModels.Configuration.Systems;
 using LicenseManager.ViewModels.Configuration.SystemVersions;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.Data.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace LicenseManager.Controllers
@@ -16,17 +18,21 @@ namespace LicenseManager.Controllers
     {
         private readonly LicenseManagerDbContext dbContext;
         private readonly ILogger<ConfigurationController> logger;
+        private readonly IMapper mapper;
 
         public ConfigurationController(
             LicenseManagerDbContext dbContext,
-            ILogger<ConfigurationController> logger
+            ILogger<ConfigurationController> logger,
+            IMapper mapper
             )
         {
             if (dbContext == null) throw new ArgumentNullException(nameof(dbContext));
             if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (mapper == null) throw new ArgumentNullException(nameof(mapper));
 
             this.dbContext = dbContext;
             this.logger = logger;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -40,20 +46,11 @@ namespace LicenseManager.Controllers
         [Route("klienci")]
         public IActionResult Clients()
         {
-            ClientsViewModel viewModel = new ClientsViewModel()
-            {
-                Table = new ClientsTableViewModel()
-                {
-                    Rows = dbContext.Clients
-                        .OrderBy(x => x.CreationDate)
-                        .Select(x => new ClientsTableRowViewModel()
-                        {
-                            Id = x.Id,
-                            Name = x.Name,
-                            Description = x.Description
-                        })
-                }
-            };
+            ClientsViewModel viewModel = mapper.Map<ClientsViewModel>(
+                dbContext.Clients
+                    .OrderBy(x => x.CreationDate)
+                    .ToList()
+            );
 
             return View(viewModel);
         }
@@ -74,13 +71,7 @@ namespace LicenseManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                Models.Client client = new Models.Client()
-                {
-                    Id = Guid.NewGuid(),
-                    CreationDate = DateTime.Now,
-                    Name = viewModel.Name,
-                    Description = !string.IsNullOrEmpty(viewModel.Description) ? viewModel.Description : null
-                };
+                Models.Client client = mapper.Map<Models.Client>(viewModel);
 
                 dbContext.Clients.Add(client);
                 dbContext.SaveChanges();
@@ -95,20 +86,11 @@ namespace LicenseManager.Controllers
         [Route("systemy")]
         public IActionResult Systems()
         {
-            SystemsViewModel viewModel = new SystemsViewModel()
-            {
-                Table = new SystemsTableViewModel()
-                {
-                    Rows = dbContext.Systems
-                        .OrderBy(x => x.CreationDate)
-                        .Select(x => new SystemsTableRowViewModel()
-                        {
-                            Id = x.Id,
-                            Name = x.Name,
-                            Description = x.Description
-                        })
-                }
-            };
+            SystemsViewModel viewModel = mapper.Map<SystemsViewModel>(
+                dbContext.Systems
+                    .OrderBy(x => x.CreationDate)
+                    .ToList()
+            );
 
             return View(viewModel);
         }
@@ -129,13 +111,7 @@ namespace LicenseManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                Models.System system = new Models.System()
-                {
-                    Id = Guid.NewGuid(),
-                    CreationDate = DateTime.Now,
-                    Name = viewModel.Name,
-                    Description = !string.IsNullOrEmpty(viewModel.Description) ? viewModel.Description : null
-                };
+                Models.System system = mapper.Map<Models.System>(viewModel);
 
                 dbContext.Systems.Add(system);
                 dbContext.SaveChanges();
@@ -150,22 +126,12 @@ namespace LicenseManager.Controllers
         [Route("wersje-systemow")]
         public IActionResult SystemVersions()
         {
-            SystemVersionsViewModel viewModel = new SystemVersionsViewModel()
-            {
-                Table = new SystemVersionsTableViewModel()
-                {
-                    Rows = dbContext.SystemVersions
-                        .OrderBy(x => x.CreationDate)
-                        .Select(x => new SystemVersionsTableRowViewModel()
-                        {
-                            Id = x.Id,
-                            Major = x.Major,
-                            Minor = x.Minor,
-                            Description = x.Description,
-                            SystemName = x.System.Name
-                        })
-                }
-            };
+            SystemVersionsViewModel viewModel = mapper.Map<SystemVersionsViewModel>(
+                dbContext.SystemVersions
+                    .Include(x => x.System)
+                    .OrderBy(x => x.CreationDate)
+                    .ToList()
+            );
 
             return View(viewModel);
         }
@@ -188,15 +154,10 @@ namespace LicenseManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                Models.SystemVersion systemVersion = new Models.SystemVersion()
-                {
-                    Id = Guid.NewGuid(),
-                    CreationDate = DateTime.Now,
-                    Major = int.Parse(viewModel.Major),
-                    Minor = int.Parse(viewModel.Minor),
-                    Description = !string.IsNullOrEmpty(viewModel.Description) ? viewModel.Description : null,
-                    System = dbContext.Systems.Single(x => x.Id == Guid.Parse(viewModel.SystemId))
-                };
+                Models.SystemVersion systemVersion = mapper.Map<Models.SystemVersion>(viewModel);
+
+                Guid systemId = Guid.Parse(viewModel.SystemId);
+                systemVersion.System = dbContext.Systems.Single(x => x.Id == systemId);
 
                 dbContext.SystemVersions.Add(systemVersion);
                 dbContext.SaveChanges();

@@ -8,3 +8,6 @@ table.table > thead > tr > th,
 table.table > tbody > tr > td {
   vertical-align: middle;
 }
+textarea {
+  resize: none;
+}

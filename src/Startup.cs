@@ -49,7 +49,7 @@ namespace LicenseManager
         {
             MapperConfiguration mapperConfiguration = new MapperConfiguration(configuration =>
             {
-                configuration.AddProfile(new MapperProfile());
+                configuration.AddProfile(new AutoMapperProfile());
             });
 
             mapperConfiguration.AssertConfigurationIsValid();

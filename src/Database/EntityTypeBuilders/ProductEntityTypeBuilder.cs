@@ -9,6 +9,9 @@ namespace LicenseManager.Database.EntityTypeBuilders
         {
             entityTypeBuilder
                 .ToTable("Products");
+            entityTypeBuilder
+                .Property(x => x.Deleted)
+                .HasDefaultValue(false);
         }
     }
 }

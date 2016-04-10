@@ -8,9 +8,10 @@ using LicenseManager.Database;
 namespace src.Migrations
 {
     [DbContext(typeof(LicenseManagerDbContext))]
-    partial class LicenseManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160410123321_AddDeletedColumn")]
+    partial class AddDeletedColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")

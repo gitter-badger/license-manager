@@ -10,6 +10,9 @@ namespace LicenseManager.Database.EntityTypeBuilders
             entityTypeBuilder
                 .ToTable("LicenseTemplateElements");
             entityTypeBuilder
+                .Property(x => x.Deleted)
+                .HasDefaultValue(false);
+            entityTypeBuilder
                 .Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(100);

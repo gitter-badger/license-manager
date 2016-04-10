@@ -10,6 +10,9 @@ namespace LicenseManager.Database.EntityTypeBuilders
             entityTypeBuilder
                 .ToTable("SystemVersions");
             entityTypeBuilder
+                .Property(x => x.Deleted)
+                .HasDefaultValue(false);
+            entityTypeBuilder
                 .Property(x => x.Description)
                 .HasMaxLength(500);
         }

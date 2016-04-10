@@ -2,7 +2,7 @@ using System;
 
 namespace LicenseManager.Models
 {
-    /// Klient
+    /// Encja bazowa
     public abstract class Entity<T>
     {
         /// Identyfikator
@@ -13,5 +13,8 @@ namespace LicenseManager.Models
 
         /// Data ostatniej modyfikacji
         public DateTime? LastModificationDate { get; set; }
+
+        /// Czy została usunięta?
+        public bool Deleted { get; set; }
     }
 }

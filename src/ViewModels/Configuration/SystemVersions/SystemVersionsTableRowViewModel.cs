@@ -19,5 +19,8 @@ namespace LicenseManager.ViewModels.Configuration.SystemVersions
 
         /// Nazwa systemu
         public string SystemName { get; set; }
+        
+        /// Czy został usunięty?
+        public bool Deleted { get; set; }
     }
 }

@@ -13,5 +13,8 @@ namespace LicenseManager.ViewModels.Configuration.Clients
 
         /// Opis
         public string Description { get; set; }
+        
+        /// Czy został usunięty?
+        public bool Deleted { get; set; }
     }
 }

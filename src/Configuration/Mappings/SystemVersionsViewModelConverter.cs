@@ -21,7 +21,8 @@ namespace LicenseManager.Configuration.Mappings
                     Major = systemVersion.Major,
                     Minor = systemVersion.Minor,
                     Description = systemVersion.Description,
-                    SystemName = systemVersion.System.Name
+                    SystemName = systemVersion.System.Name,
+                    Deleted = systemVersion.Deleted
                 });
             }
 

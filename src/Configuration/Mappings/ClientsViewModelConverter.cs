@@ -19,7 +19,8 @@ namespace LicenseManager.Configuration.Mappings
                 {
                     Id = client.Id,
                     Name = client.Name,
-                    Description = client.Description
+                    Description = client.Description,
+                    Deleted = client.Deleted
                 });
             }
 

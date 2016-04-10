@@ -10,16 +10,16 @@
         </tr>
     </thead>
     <tbody data-bind="foreach: Table.Rows">
-        <tr>
+        <tr data-bind="css: Deleted ? 'text-muted' : ''">
             <td class="col-xs-1 text-center" data-bind="text: ($index() + 1) + '.'"></td>
             <td class="col-xs-3" data-bind="text: Name"></td>
             <td class="col-xs-5" data-bind="text: Description"></td>
             <td class="col-xs-3 text-center">
-                <a asp-controller="Configuration" asp-action="EditClient" class="btn btn-default">
+                <a asp-controller="Configuration" asp-action="EditClient" data-bind="css: Deleted ? 'btn btn-default disabled' : 'btn btn-default'">
                     <span class="glyphicon glyphicon-edit"></span>
                     Edytuj
                 </a>
-                <a asp-controller="Configuration" asp-action="DeleteClient" class="btn btn-danger">
+                <a asp-controller="Configuration" asp-action="DeleteClient" data-bind="css: Deleted ? 'btn btn-danger disabled' : 'btn btn-danger'">
                     <span class="glyphicon glyphicon-remove"></span>
                     Usuń
                 </a>

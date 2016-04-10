@@ -42,7 +42,7 @@ namespace LicenseManager
                 .Configure<GlobalSettings>(Configuration.GetSection("GlobalSettings"));
 
             services
-                .AddSingleton<IMapper>(sc => CreateMapperConfiguration().CreateMapper());
+                .AddSingleton<IMapper>(sp => CreateMapperConfiguration().CreateMapper());
         }
 
         private MapperConfiguration CreateMapperConfiguration()

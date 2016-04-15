@@ -145,6 +145,28 @@ namespace LicenseManager.Controllers
             return View(viewModel);
         }
 
+        [HttpDelete]
+        [Route("systemy/usun/{id?}")]
+        public IActionResult DeleteSystem(Guid? id)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            Models.System system = dbContext.Systems
+                .SingleOrDefault(x => x.Id == id);
+
+            if (system != null)
+            {
+                system.Deleted = true;
+                
+                dbContext.SaveChanges();
+
+                return new HttpStatusCodeResult((int)HttpStatusCode.OK);
+            }
+
+            return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
+        }
+        
         [HttpGet]
         [Route("wersje-systemow")]
         public IActionResult SystemVersions()

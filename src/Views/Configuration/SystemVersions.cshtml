@@ -11,22 +11,22 @@
             <th>Akcje</th>
         </tr>
     </thead>
-    <tbody data-bind="foreach: Table.Rows">
-        <tr data-bind="css: Deleted ? 'text-muted' : ''">
+    <tbody data-bind="foreach: Table">
+        <tr data-bind="css: $data.Deleted() ? 'text-muted' : ''">
             <td class="col-xs-1 text-center" data-bind="text: ($index() + 1) + '.'"></td>
-            <td class="col-xs-3" data-bind="text: SystemName"></td>
-            <td class="col-xs-1 text-center" data-bind="text: Major"></td>
-            <td class="col-xs-1 text-center" data-bind="text: Minor"></td>
-            <td class="col-xs-3" data-bind="text: Description"></td>
+            <td class="col-xs-3" data-bind="text: $data.SystemName()"></td>
+            <td class="col-xs-1 text-center" data-bind="text: $data.Major()"></td>
+            <td class="col-xs-1 text-center" data-bind="text: $data.Minor()"></td>
+            <td class="col-xs-3" data-bind="text: $data.Description()"></td>
             <td class="col-xs-3 text-center">
-                <a asp-controller="Configuration" asp-action="EditSystemVersion" data-bind="css: Deleted ? 'btn btn-default disabled' : 'btn btn-default'">
+                <div data-bind="css: $data.Deleted() ? 'btn btn-default disabled' : 'btn btn-default'">
                     <span class="glyphicon glyphicon-edit"></span>
                     Edytuj
-                </a>
-                <a asp-controller="Configuration" asp-action="DeleteSystemVersion" data-bind="css: Deleted ? 'btn btn-danger disabled' : 'btn btn-danger'">
+                </div>
+                <div data-bind="css: $data.Deleted() ? 'btn btn-danger disabled' : 'btn btn-danger', click: $root.Delete">
                     <span class="glyphicon glyphicon-remove"></span>
                     Usuń
-                </a>
+                </div>
             </td>
         </tr>
     </tbody>
@@ -37,8 +37,9 @@
 @section scripts {
     <script src="~/js/ViewModels/SystemVersionsVM.js"></script>
     <script>
-        var viewModel = new SystemVersionsVM();
-        viewModel.Table.Rows(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Table.Rows)));
+        var json = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Table.Rows));
+        var viewModel = new SystemVersionsVM(json);
+        viewModel.DeleteActionUrl = '@Url.Action("DeleteSystemVersion", "Configuration")';
         ko.applyBindings(viewModel);
     </script>
 }

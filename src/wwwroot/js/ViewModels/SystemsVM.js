@@ -3,7 +3,7 @@ var SystemsVM = function (json) {
 
     self.Table = ko.observableArray([]);
     ko.mapping.fromJS(json, {}, self.Table);
-    
+
     self.DeleteLock = false;
     self.DeleteActionUrl = '';
 

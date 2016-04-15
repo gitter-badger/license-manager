@@ -96,7 +96,7 @@ namespace LicenseManager.Controllers
             if (client != null)
             {
                 client.Deleted = true;
-                
+
                 dbContext.SaveChanges();
 
                 return new HttpStatusCodeResult((int)HttpStatusCode.OK);
@@ -158,7 +158,7 @@ namespace LicenseManager.Controllers
             if (system != null)
             {
                 system.Deleted = true;
-                
+
                 dbContext.SaveChanges();
 
                 return new HttpStatusCodeResult((int)HttpStatusCode.OK);
@@ -166,7 +166,7 @@ namespace LicenseManager.Controllers
 
             return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
         }
-        
+
         [HttpGet]
         [Route("wersje-systemow")]
         public IActionResult SystemVersions()
@@ -213,6 +213,28 @@ namespace LicenseManager.Controllers
             ViewBag.SystemSelectListItems = GetSystemSelectListItems();
 
             return View(viewModel);
+        }
+
+        [HttpDelete]
+        [Route("wersje-systemow/usun/{id?}")]
+        public IActionResult DeleteSystemVersion(Guid? id)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            Models.SystemVersion systemVersion = dbContext.SystemVersions
+                .SingleOrDefault(x => x.Id == id);
+
+            if (systemVersion != null)
+            {
+                systemVersion.Deleted = true;
+
+                dbContext.SaveChanges();
+
+                return new HttpStatusCodeResult((int)HttpStatusCode.OK);
+            }
+
+            return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
         }
 
         private List<SelectListItem> GetSystemSelectListItems()

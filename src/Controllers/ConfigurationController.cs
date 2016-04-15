@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using AutoMapper;
 using LicenseManager.Database;
 using LicenseManager.ViewModels.Configuration.Clients;
@@ -80,6 +81,28 @@ namespace LicenseManager.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpDelete]
+        [Route("klienci/usun/{id?}")]
+        public IActionResult DeleteClient(Guid? id)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            Models.Client client = dbContext.Clients
+                .SingleOrDefault(x => x.Id == id);
+
+            if (client != null)
+            {
+                client.Deleted = true;
+                
+                dbContext.SaveChanges();
+
+                return new HttpStatusCodeResult((int)HttpStatusCode.OK);
+            }
+
+            return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
         }
 
         [HttpGet]

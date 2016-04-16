@@ -16,8 +16,9 @@ var paths = {
     bower: "./bower_components/"
 };
 
-gulp.task("copy-libs", function() {
+gulp.task("copy-libs", function () {
     var libs = {
+        "bootbox": ["bootbox/*.{js,map}"],
         "bootstrap": ["bootstrap/dist/**/*.{css,eot,js,map,svg,ttf,woff,woff2}"],
         "bootstrap-treeview": ["bootstrap-treeview/dist/**/*.{css,js,map}"],
         "jquery": ["jquery/dist/**/*.{js,map}"],
@@ -35,20 +36,20 @@ gulp.task("copy-libs", function() {
     }
 });
 
-gulp.task("copy-js", function() {
+gulp.task("copy-js", function () {
     return gulp
         .src(paths.scripts + "**/*.js")
         .pipe(gulp.dest(paths.js));
 });
 
-gulp.task("less", function() {
+gulp.task("less", function () {
     return gulp
         .src(paths.styles + "**/*.less")
         .pipe(gulp_less())
         .pipe(gulp.dest(paths.css));
 });
 
-gulp.task("copy-css", ["less"], function() {
+gulp.task("copy-css", ["less"], function () {
     return gulp
         .src([paths.css + "**/*.css", "!" + paths.css + "**/*.min.css"])
         .pipe(gulp_cssmin())

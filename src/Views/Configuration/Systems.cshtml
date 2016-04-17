@@ -16,11 +16,11 @@
             <td class="col-xs-5" data-bind="text: $data.Description()"></td>
             <td class="col-xs-3 text-center">
                 <div data-bind="css: $data.Deleted() ? 'btn btn-default disabled' : 'btn btn-default'">
-                    <span class="glyphicon glyphicon-edit"></span>
+                    <span class="fa fa-edit"></span>
                     Edytuj
                 </div>
                 <div data-bind="css: $data.Deleted() ? 'btn btn-danger disabled' : 'btn btn-danger', click: $root.Delete">
-                    <span class="glyphicon glyphicon-remove"></span>
+                    <span class="fa fa-remove"></span>
                     Usuń
                 </div>
             </td>
@@ -28,7 +28,10 @@
     </tbody>
 </table>
 
-<a asp-controller="Configuration" asp-action="Index" class="btn btn-default">Powrót do strony głównej</a>
+<a asp-controller="Configuration" asp-action="Index" class="btn btn-default">
+    <span class="fa fa-undo"></span>
+    Powrót do strony głównej
+</a>
 
 @section scripts {
     <script src="~/js/ViewModels/SystemsVM.js"></script>

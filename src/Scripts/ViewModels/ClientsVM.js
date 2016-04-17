@@ -21,7 +21,7 @@ var ClientsVM = function (json) {
                                 if (xhr.status == 200) {
                                     client.Deleted(true);
                                 } else {
-                                    // TODO
+                                    bootbox.alert('Usunięcie wybranego klienta nie powiodło się (błąd HTTP ' + xhr.status + ').');
                                 }
                                 self.DeleteLock = false;
                             }

@@ -12,7 +12,7 @@ var SystemVersionsVM = function (json) {
             if (!self.DeleteLock) {
                 self.DeleteLock = true;
                 bootbox.setLocale('pl');
-                bootbox.confirm('Czy na pewno chcesz usunąć wybranego klienta?', function (result) {
+                bootbox.confirm('Czy na pewno chcesz usunąć wybraną wersję systemu?', function (result) {
                     if (result) {
                         $.ajax({
                             url: self.DeleteActionUrl + '/' + systemVersion.Id(),
@@ -21,7 +21,7 @@ var SystemVersionsVM = function (json) {
                                 if (xhr.status == 200) {
                                     systemVersion.Deleted(true);
                                 } else {
-                                    // TODO
+                                    bootbox.alert('Usunięcie wybranej wersji systemu nie powiodło się (błąd HTTP ' + xhr.status + ').');
                                 }
                                 self.DeleteLock = false;
                             }

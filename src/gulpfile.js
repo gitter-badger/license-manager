@@ -21,6 +21,7 @@ gulp.task("copy-libs", function () {
         "bootbox": ["bootbox/*.{js,map}"],
         "bootstrap": ["bootstrap/dist/**/*.{css,eot,js,map,svg,ttf,woff,woff2}"],
         "bootstrap-treeview": ["bootstrap-treeview/dist/**/*.{css,js,map}"],
+        "font-awesome": ["font-awesome/**/*.{css,eot,map,svg,ttf,woff,woff2}"],
         "jquery": ["jquery/dist/**/*.{js,map}"],
         "jquery-validation": ["jquery-validation/dist/**/*.{js,map}"],
         "jquery-validation-unobtrusive": ["jquery-validation-unobtrusive/**/*.{js,map}"],

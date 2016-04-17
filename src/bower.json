@@ -5,6 +5,7 @@
         "bootbox": "*",
         "bootstrap": "*",
         "bootstrap-treeview": "*",
+        "font-awesome": "*",
         "jquery": "*",
         "jquery-validation-unobtrusive": "*",
         "knockout": "*",

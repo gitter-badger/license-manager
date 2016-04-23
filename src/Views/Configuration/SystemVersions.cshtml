@@ -1,41 +1,62 @@
 @model SystemVersionsViewModel
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Nazwa systemu</th>
-            <th>Numer główny</th>
-            <th>Numer dodatkowy</th>
-            <th>Opis</th>
-            <th>Akcje</th>
-        </tr>
-    </thead>
-    <tbody data-bind="foreach: Table">
-        <tr data-bind="css: $data.Deleted() ? 'text-muted' : ''">
-            <td class="col-xs-1 text-center" data-bind="text: ($index() + 1) + '.'"></td>
-            <td class="col-xs-3" data-bind="text: $data.SystemName()"></td>
-            <td class="col-xs-1 text-center" data-bind="text: $data.Major()"></td>
-            <td class="col-xs-1 text-center" data-bind="text: $data.Minor()"></td>
-            <td class="col-xs-3" data-bind="text: $data.Description()"></td>
-            <td class="col-xs-3 text-center">
-                <div data-bind="css: $data.Deleted() ? 'btn btn-default disabled' : 'btn btn-default'">
-                    <span class="fa fa-edit"></span>
-                    Edytuj
-                </div>
-                <div data-bind="css: $data.Deleted() ? 'btn btn-danger disabled' : 'btn btn-danger', click: $root.Delete">
-                    <span class="fa fa-remove"></span>
-                    Usuń
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<a asp-controller="Configuration" asp-action="Index" class="btn btn-default">
-    <span class="fa fa-undo"></span>
-    Powrót do strony głównej
-</a>
+<div class="col-xs-3 list-group">                    
+    <a asp-controller="Configuration" asp-action="Clients" class="list-group-item">
+        <span class="fa fa-users"></span>
+        Klienci
+    </a>
+    <a asp-controller="Configuration" asp-action="Systems" class="list-group-item">
+        <span class="fa fa-laptop"></span>
+        Systemy
+    </a>
+    <a asp-controller="Configuration" asp-action="SystemVersions" class="list-group-item active">
+        <span class="fa fa-server"></span>
+        Wersje systemów
+    </a>
+</div>
+<div class="col-xs-9">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nazwa systemu</th>
+                <th>Numer główny</th>
+                <th>Numer dodatkowy</th>
+                <th>Opis</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: Table">
+            <tr data-bind="css: $data.Deleted() ? 'text-muted' : ''">
+                <td class="col-xs-1 text-center" data-bind="text: ($index() + 1) + '.'"></td>
+                <td class="col-xs-3" data-bind="text: $data.SystemName()"></td>
+                <td class="col-xs-1 text-center" data-bind="text: $data.Major()"></td>
+                <td class="col-xs-1 text-center" data-bind="text: $data.Minor()"></td>
+                <td class="col-xs-3">
+                    <em data-bind="text: $data.Description()"></em>
+                </td>
+                <td class="col-xs-3 text-center">
+                    <div data-bind="css: $data.Deleted() ? 'btn btn-default disabled' : 'btn btn-default'">
+                        <span class="fa fa-edit"></span>
+                        Edytuj
+                    </div>
+                    <div data-bind="css: $data.Deleted() ? 'btn btn-danger disabled' : 'btn btn-danger', click: $root.Delete">
+                        <span class="fa fa-remove"></span>
+                        Usuń
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a asp-controller="Configuration" asp-action="CreateSystemVersion" class="btn btn-success">
+        <span class="fa fa-plus"></span>
+        Stwórz nową wersję systemu
+    </a>
+    <a asp-controller="Configuration" asp-action="Index" class="btn btn-default">
+        <span class="fa fa-undo"></span>
+        Powrót do strony głównej
+    </a>
+</div>
 
 @section scripts {
     <script src="~/js/ViewModels/SystemVersionsVM.js"></script>

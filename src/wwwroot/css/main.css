@@ -11,3 +11,6 @@ table.table > tbody > tr > td {
 textarea {
   resize: none;
 }
+a.list-group-item span.fa {
+  padding: 0 5px 0 0;
+}

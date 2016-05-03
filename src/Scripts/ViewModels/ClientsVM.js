@@ -3,7 +3,9 @@ var ClientsVM = function (json) {
 
     self.Table = ko.observableArray([]);
     ko.mapping.fromJS(json, {}, self.Table);
-
+    
+    self.ShowDeletedClients = ko.observable(true);
+    
     self.DeleteLock = false;
 
     self.DeleteActionUrl = '';

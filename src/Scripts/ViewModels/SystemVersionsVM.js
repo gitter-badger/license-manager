@@ -3,7 +3,9 @@ var SystemVersionsVM = function (json) {
 
     self.Table = ko.observableArray([]);
     ko.mapping.fromJS(json, {}, self.Table);
-
+    
+    self.ShowDeletedSystemVersions = ko.observable(true);
+    
     self.DeleteLock = false;
 
     self.DeleteActionUrl = '';

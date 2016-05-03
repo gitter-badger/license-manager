@@ -32,10 +32,10 @@
                     <em data-bind="text: $data.Description()"></em>
                 </td>
                 <td class="col-xs-3 text-center">
-                    <div data-bind="css: $data.Deleted() ? 'btn btn-default disabled' : 'btn btn-default'">
+                    <a data-bind="css: $data.Deleted() ? 'btn btn-default disabled' : 'btn btn-default', attr: { href: '@Url.Action("ModifyClient", "Configuration")' + '/' + $data.Id() }">                       
                         <span class="fa fa-edit"></span>
                         Edytuj
-                    </div>
+                    </a>
                     <div data-bind="css: $data.Deleted() ? 'btn btn-danger disabled' : 'btn btn-danger', click: $root.Delete">
                         <span class="fa fa-remove"></span>
                         Usuń
@@ -59,7 +59,7 @@
     <script>
         var json = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Table.Rows));
         var viewModel = new ClientsVM(json);
-        viewModel.DeleteActionUrl = '@Url.Action("DeleteClient", "Configuration")';       
+        viewModel.DeleteActionUrl = '@Url.Action("DeleteClient", "Configuration")';
         ko.applyBindings(viewModel);
     </script>
 }

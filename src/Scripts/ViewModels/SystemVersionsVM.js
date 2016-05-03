@@ -5,6 +5,7 @@ var SystemVersionsVM = function (json) {
     ko.mapping.fromJS(json, {}, self.Table);
 
     self.DeleteLock = false;
+
     self.DeleteActionUrl = '';
 
     self.Delete = function (systemVersion) {

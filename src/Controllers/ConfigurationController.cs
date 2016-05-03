@@ -75,12 +75,62 @@ namespace LicenseManager.Controllers
                 Models.Client client = mapper.Map<Models.Client>(viewModel);
 
                 dbContext.Clients.Add(client);
+
                 dbContext.SaveChanges();
 
                 return RedirectToAction("Clients");
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("klienci/modyfikuj/{id?}")]
+        public IActionResult ModifyClient(Guid? id)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            Models.Client client = dbContext.Clients
+                .SingleOrDefault(x => x.Id == id);
+
+            if (client != null && !client.Deleted)
+            {
+                ModifyClientViewModel viewModel = mapper.Map<ModifyClientViewModel>(client);
+
+                return View(viewModel);
+            }
+
+            return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("klienci/modyfikuj/{id?}")]
+        public IActionResult ModifyClient(Guid? id, ModifyClientViewModel viewModel)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            if (ModelState.IsValid)
+            {
+                Models.Client client = dbContext.Clients
+                    .SingleOrDefault(x => x.Id == id);
+
+                if (client != null)
+                {
+                    client.Name = viewModel.Name;
+                    client.Description = viewModel.Description;
+
+                    dbContext.SaveChanges();
+
+                    return RedirectToAction("Clients");
+                }
+
+                return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
+            }
+
+            return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
         }
 
         [HttpDelete]
@@ -137,12 +187,62 @@ namespace LicenseManager.Controllers
                 Models.System system = mapper.Map<Models.System>(viewModel);
 
                 dbContext.Systems.Add(system);
+
                 dbContext.SaveChanges();
 
                 return RedirectToAction("Systems");
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("systemy/modyfikuj/{id?}")]
+        public IActionResult ModifySystem(Guid? id)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            Models.System system = dbContext.Systems
+                .SingleOrDefault(x => x.Id == id);
+
+            if (system != null && !system.Deleted)
+            {
+                ModifySystemViewModel viewModel = mapper.Map<ModifySystemViewModel>(system);
+
+                return View(viewModel);
+            }
+
+            return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("systemy/modyfikuj/{id?}")]
+        public IActionResult ModifySystem(Guid? id, ModifySystemViewModel viewModel)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            if (ModelState.IsValid)
+            {
+                Models.System system = dbContext.Systems
+                    .SingleOrDefault(x => x.Id == id);
+
+                if (system != null)
+                {
+                    system.Name = viewModel.Name;
+                    system.Description = viewModel.Description;
+
+                    dbContext.SaveChanges();
+
+                    return RedirectToAction("Systems");
+                }
+
+                return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
+            }
+
+            return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
         }
 
         [HttpDelete]
@@ -202,9 +302,11 @@ namespace LicenseManager.Controllers
                 Models.SystemVersion systemVersion = mapper.Map<Models.SystemVersion>(viewModel);
 
                 Guid systemId = Guid.Parse(viewModel.SystemId);
-                systemVersion.System = dbContext.Systems.Single(x => x.Id == systemId);
+                systemVersion.System = dbContext.Systems
+                    .Single(x => x.Id == systemId);
 
                 dbContext.SystemVersions.Add(systemVersion);
+
                 dbContext.SaveChanges();
 
                 return RedirectToAction("SystemVersions");
@@ -213,6 +315,62 @@ namespace LicenseManager.Controllers
             ViewBag.SystemSelectListItems = GetSystemSelectListItems();
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("wersje-systemow/modyfikuj/{id?}")]
+        public IActionResult ModifySystemVersion(Guid? id)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            Models.SystemVersion systemVersion = dbContext.SystemVersions
+                .SingleOrDefault(x => x.Id == id);
+
+            if (systemVersion != null && !systemVersion.Deleted)
+            {
+                ViewBag.SystemSelectListItems = GetSystemSelectListItems();
+
+                ModifySystemVersionViewModel viewModel = mapper.Map<ModifySystemVersionViewModel>(systemVersion);
+
+                return View(viewModel);
+            }
+
+            return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("wersje-systemow/modyfikuj/{id?}")]
+        public IActionResult ModifySystemVersion(Guid? id, ModifySystemVersionViewModel viewModel)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            if (ModelState.IsValid)
+            {
+                Models.SystemVersion systemVersion = dbContext.SystemVersions
+                    .SingleOrDefault(x => x.Id == id);
+
+                if (systemVersion != null)
+                {
+                    systemVersion.Major = int.Parse(viewModel.Major);
+                    systemVersion.Minor = int.Parse(viewModel.Minor);
+                    systemVersion.Description = viewModel.Description;
+
+                    Guid systemId = Guid.Parse(viewModel.SystemId);
+                    systemVersion.System = dbContext.Systems
+                        .Single(x => x.Id == systemId);
+
+                    dbContext.SaveChanges();
+
+                    return RedirectToAction("SystemVersions");
+                }
+
+                return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
+            }
+
+            return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
         }
 
         [HttpDelete]

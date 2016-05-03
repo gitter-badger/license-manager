@@ -21,6 +21,10 @@ namespace LicenseManager.Configuration.Mappings
                 .ForMember(d => d.Description, c => c.MapFrom(s => !string.IsNullOrEmpty(s.Description) ? s.Description : null))
                 .ForMember(d => d.Products, c => c.Ignore());
 
+            CreateMap<Models.Client, ModifyClientViewModel>()
+                .ForMember(d => d.Name, c => c.MapFrom(s => s.Name))
+                .ForMember(d => d.Description, c => c.MapFrom(s => s.Description));
+
             CreateMap<CreateSystemViewModel, Models.System>()
                 .ForMember(d => d.Id, c => c.MapFrom(s => Guid.NewGuid()))
                 .ForMember(d => d.CreationDate, c => c.MapFrom(s => DateTime.Now))
@@ -29,6 +33,10 @@ namespace LicenseManager.Configuration.Mappings
                 .ForMember(d => d.Name, c => c.MapFrom(s => s.Name))
                 .ForMember(d => d.Description, c => c.MapFrom(s => !string.IsNullOrEmpty(s.Description) ? s.Description : null))
                 .ForMember(d => d.SystemVersions, c => c.Ignore());
+
+            CreateMap<Models.System, ModifySystemViewModel>()
+                .ForMember(d => d.Name, c => c.MapFrom(s => s.Name))
+                .ForMember(d => d.Description, c => c.MapFrom(s => s.Description));
 
             CreateMap<CreateSystemVersionViewModel, Models.SystemVersion>()
                 .ForMember(d => d.Id, c => c.MapFrom(s => Guid.NewGuid()))
@@ -40,6 +48,12 @@ namespace LicenseManager.Configuration.Mappings
                 .ForMember(d => d.Description, c => c.MapFrom(s => !string.IsNullOrEmpty(s.Description) ? s.Description : null))
                 .ForMember(d => d.System, c => c.Ignore())
                 .ForMember(d => d.SystemId, c => c.Ignore());
+
+            CreateMap<Models.SystemVersion, ModifySystemVersionViewModel>()
+                .ForMember(d => d.Major, c => c.MapFrom(s => s.Major))
+                .ForMember(d => d.Minor, c => c.MapFrom(s => s.Minor))
+                .ForMember(d => d.Description, c => c.MapFrom(s => s.Description))
+                .ForMember(d => d.SystemId, c => c.MapFrom(s => s.SystemId));
 
             CreateMap<List<Models.Client>, ClientsViewModel>()
                 .ConvertUsing(new ClientsViewModelConverter());

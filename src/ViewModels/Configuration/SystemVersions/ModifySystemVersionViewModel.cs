@@ -2,8 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LicenseManager.ViewModels.Configuration.SystemVersions
 {
-    /// Model widoku dla akcji tworzenia nowej wersji systemu
-    public class CreateSystemVersionViewModel
+    /// Model widoku dla akcji modyfikacji istniejącej wersji systemu
+    public class ModifySystemVersionViewModel
     {
         /// Numer główny
         [Display(Name = "Numer główny")]

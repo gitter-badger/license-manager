@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <form asp-action="CreateSystem" asp-controller="Configuration" asp-anti-forgery="true" method="POST">
+            <form id="Form" asp-action="CreateSystem" asp-controller="Configuration" asp-anti-forgery="true" method="POST">
                 <div class="form-group">
                     <label asp-for="Name"></label>:
                     <span asp-validation-for="Name" class="text-danger"></span>

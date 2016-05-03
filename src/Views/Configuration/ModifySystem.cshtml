@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <form asp-action="ModifySystem" asp-controller="Configuration" asp-anti-forgery="true" method="POST">
+            <form id="Form" asp-action="ModifySystem" asp-controller="Configuration" asp-anti-forgery="true" method="POST">
                 <div class="form-group">
                     <label asp-for="Name"></label>:
                     <span asp-validation-for="Name" class="text-danger"></span>
@@ -38,9 +38,9 @@
                         <span class="fa fa-save"></span>
                         Zapisz dane
                     </button>
-                    <button type="reset" class="btn btn-default">
+                    <button id="Reset" type="button" class="btn btn-default">
                         <span class="fa fa-refresh"></span>
-                        Wyczyść formularz
+                        Wycofaj zmiany
                     </button>
                 </div>
             </form>
@@ -51,3 +51,12 @@
         Powrót do listy systemów
     </a>
 </div>
+
+@section scripts {
+    <script>
+        $('#Reset').click(function() {
+            $('#Form').trigger('reset.unobtrusiveValidation');
+            $('#Form').validate().resetForm();
+        });
+    </script>
+}

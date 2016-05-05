@@ -1,8 +1,16 @@
-<ul>
-    <li><a asp-controller="Configuration" asp-action="Clients">Lista klientów</a></li>
-    <li><a asp-controller="Configuration" asp-action="CreateClient">Stwórz nowego klienta</a></li>
-    <li><a asp-controller="Configuration" asp-action="Systems">Lista systemów</a></li>
-    <li><a asp-controller="Configuration" asp-action="CreateSystem">Stwórz nowy system</a></li>
-    <li><a asp-controller="Configuration" asp-action="SystemVersions">Lista wersji systemów</a></li>
-    <li><a asp-controller="Configuration" asp-action="CreateSystemVersion">Stwórz nową wersję systemu</a></li>
-</ul>
+<div class="col-xs-3 list-group">                    
+    <a asp-controller="Configuration" asp-action="Clients" class="list-group-item active">
+        <span class="fa fa-users"></span>
+        Klienci
+    </a>
+    <a asp-controller="Configuration" asp-action="Systems" class="list-group-item">
+        <span class="fa fa-laptop"></span>
+        Systemy
+    </a>
+    <a asp-controller="Configuration" asp-action="SystemVersions" class="list-group-item">
+        <span class="fa fa-server"></span>
+        Wersje systemów
+    </a>
+</div>
+<div class="col-xs-9">
+</div>

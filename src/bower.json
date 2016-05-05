@@ -4,6 +4,7 @@
     "dependencies": {
         "bootbox": "*",
         "bootstrap": "*",
+        "bootstrap-switch": "*",
         "bootstrap-treeview": "*",
         "font-awesome": "*",
         "jquery": "*",

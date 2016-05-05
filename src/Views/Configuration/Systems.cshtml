@@ -15,9 +15,9 @@
     </a>
 </div>
 <div class="col-xs-9">
-    <div class="table-filters text-right">    
-        <input id="ShowDeletedSystemsFilter" type="checkbox" data-bind="checked: ShowDeletedSystems" />
-        <label for="ShowDeletedSystemsFilter">Pokaż usunięte systemy</label>
+    <div class="table-filters text-right">
+        Pokaż usunięte:
+        <input type="checkbox" data-bind="bootstrapSwitch: ShowDeletedSystems" data-size="mini" />
     </div>
     <table class="table table-striped table-bordered">
         <thead>
@@ -60,6 +60,7 @@
 
 @section scripts {
     <script src="~/js/ViewModels/SystemsVM.js"></script>
+    <script src="~/js/ko.bindingHandlers/bootstrapSwitch.js"></script>
     <script>
         var json = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Table.Rows));
         var viewModel = new SystemsVM(json);

@@ -20,6 +20,7 @@ gulp.task("copy-libs", function () {
     var libs = {
         "bootbox": ["bootbox/*.{js,map}"],
         "bootstrap": ["bootstrap/dist/**/*.{css,eot,js,map,svg,ttf,woff,woff2}"],
+        "bootstrap-switch": ["bootstrap-switch/dist/css/bootstrap3/*.css", "bootstrap-switch/dist/js/*.{js,map}"],
         "bootstrap-treeview": ["bootstrap-treeview/dist/**/*.{css,js,map}"],
         "font-awesome": ["font-awesome/**/*.{css,eot,map,svg,ttf,woff,woff2}"],
         "jquery": ["jquery/dist/**/*.{js,map}"],

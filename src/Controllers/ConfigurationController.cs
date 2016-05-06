@@ -40,6 +40,8 @@ namespace LicenseManager.Controllers
         [Route("")]
         public IActionResult Index()
         {
+            FillNavigationViewBag();
+
             return View();
         }
 
@@ -47,6 +49,8 @@ namespace LicenseManager.Controllers
         [Route("klienci")]
         public IActionResult Clients()
         {
+            FillNavigationViewBag();
+
             ClientsViewModel viewModel = mapper.Map<ClientsViewModel>(
                 dbContext.Clients
                     .OrderBy(x => x.CreationDate)
@@ -60,6 +64,8 @@ namespace LicenseManager.Controllers
         [Route("klienci/stworz")]
         public IActionResult CreateClient()
         {
+            FillNavigationViewBag();
+
             CreateClientViewModel viewModel = new CreateClientViewModel();
 
             return View(viewModel);
@@ -81,6 +87,8 @@ namespace LicenseManager.Controllers
                 return RedirectToAction("Clients");
             }
 
+            FillNavigationViewBag();
+
             return View(viewModel);
         }
 
@@ -96,6 +104,8 @@ namespace LicenseManager.Controllers
 
             if (client != null && !client.Deleted)
             {
+                FillNavigationViewBag();
+
                 ModifyClientViewModel viewModel = mapper.Map<ModifyClientViewModel>(client);
 
                 return View(viewModel);
@@ -130,7 +140,9 @@ namespace LicenseManager.Controllers
                 return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
             }
 
-            return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+            FillNavigationViewBag();
+
+            return View(viewModel);
         }
 
         [HttpDelete]
@@ -159,6 +171,8 @@ namespace LicenseManager.Controllers
         [Route("systemy")]
         public IActionResult Systems()
         {
+            FillNavigationViewBag();
+
             SystemsViewModel viewModel = mapper.Map<SystemsViewModel>(
                 dbContext.Systems
                     .OrderBy(x => x.CreationDate)
@@ -172,6 +186,8 @@ namespace LicenseManager.Controllers
         [Route("systemy/stworz")]
         public IActionResult CreateSystem()
         {
+            FillNavigationViewBag();
+
             CreateSystemViewModel viewModel = new CreateSystemViewModel();
 
             return View(viewModel);
@@ -193,6 +209,8 @@ namespace LicenseManager.Controllers
                 return RedirectToAction("Systems");
             }
 
+            FillNavigationViewBag();
+
             return View(viewModel);
         }
 
@@ -208,6 +226,8 @@ namespace LicenseManager.Controllers
 
             if (system != null && !system.Deleted)
             {
+                FillNavigationViewBag();
+
                 ModifySystemViewModel viewModel = mapper.Map<ModifySystemViewModel>(system);
 
                 return View(viewModel);
@@ -242,7 +262,9 @@ namespace LicenseManager.Controllers
                 return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
             }
 
-            return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+            FillNavigationViewBag();
+
+            return View(viewModel);
         }
 
         [HttpDelete]
@@ -271,6 +293,8 @@ namespace LicenseManager.Controllers
         [Route("wersje-systemow")]
         public IActionResult SystemVersions()
         {
+            FillNavigationViewBag();
+
             SystemVersionsViewModel viewModel = mapper.Map<SystemVersionsViewModel>(
                 dbContext.SystemVersions
                     .Include(x => x.System)
@@ -285,6 +309,8 @@ namespace LicenseManager.Controllers
         [Route("wersje-systemow/stworz")]
         public IActionResult CreateSystemVersion()
         {
+            FillNavigationViewBag();
+
             ViewBag.SystemSelectListItems = GetSystemSelectListItems();
 
             CreateSystemVersionViewModel viewModel = new CreateSystemVersionViewModel();
@@ -312,6 +338,8 @@ namespace LicenseManager.Controllers
                 return RedirectToAction("SystemVersions");
             }
 
+            FillNavigationViewBag();
+
             ViewBag.SystemSelectListItems = GetSystemSelectListItems();
 
             return View(viewModel);
@@ -329,6 +357,8 @@ namespace LicenseManager.Controllers
 
             if (systemVersion != null && !systemVersion.Deleted)
             {
+                FillNavigationViewBag();
+
                 ViewBag.SystemSelectListItems = GetSystemSelectListItems();
 
                 ModifySystemVersionViewModel viewModel = mapper.Map<ModifySystemVersionViewModel>(systemVersion);
@@ -370,7 +400,9 @@ namespace LicenseManager.Controllers
                 return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
             }
 
-            return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+            FillNavigationViewBag();
+
+            return View(viewModel);
         }
 
         [HttpDelete]
@@ -393,6 +425,31 @@ namespace LicenseManager.Controllers
             }
 
             return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
+        }
+
+        private void FillNavigationViewBag()
+        {
+            ViewBag.NonDeletedClientsCount = GetNonDeletedClientsCount();
+            ViewBag.NonDeletedSystemsCount = GetNonDeletedSystemsCount();
+            ViewBag.NonDeletedSystemVersionsCount = GetNonDeletedSystemVersionsCount();
+        }
+
+        private int GetNonDeletedClientsCount()
+        {
+            return dbContext.Clients
+                .Count(x => !x.Deleted);
+        }
+
+        private int GetNonDeletedSystemsCount()
+        {
+            return dbContext.Systems
+                .Count(x => !x.Deleted);
+        }
+
+        private int GetNonDeletedSystemVersionsCount()
+        {
+            return dbContext.SystemVersions
+                .Count(x => !x.Deleted);
         }
 
         private List<SelectListItem> GetSystemSelectListItems()
